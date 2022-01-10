@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>DarknetDiaries.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>DarknetDiaries.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <Nullable>enable</Nullable>
+    <Authors>Nightowl</Authors>
+    <Company>TNO</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Standard\Standard.csproj" />
+  </ItemGroup>
+
+</Project>

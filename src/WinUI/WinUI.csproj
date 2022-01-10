@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>DarknetDiaries</AssemblyName>
+    <RootNamespace>DarknetDiaries.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <Company>TNO</Company>
+    <Authors>Nightowl</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+    <ProjectReference Include="..\Standard\Standard.csproj" />
+  </ItemGroup>
+
+</Project>

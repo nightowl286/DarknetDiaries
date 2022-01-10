@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+    <AssemblyName>DarknetDiaries.$(MSBuildProjectName)</AssemblyName>
+    <RootNamespace>DarknetDiaries.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <Company>TNO</Company>
+    <Authors>Nightowl</Authors>
+  </PropertyGroup>
+
+</Project>
