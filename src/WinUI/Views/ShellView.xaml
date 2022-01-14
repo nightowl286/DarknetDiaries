@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:DarknetDiaries.WinUI.ViewModels"
+        xmlns:views="clr-namespace:DarknetDiaries.WinUI.Views"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
         Width="375" Height="500" Title="Darknet Diaries">
@@ -13,7 +14,7 @@
             <RowDefinition Height="Auto" MinHeight="80" />
             <RowDefinition Height="30" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="80" />
+            <RowDefinition Height="Auto" MaxHeight="80" />
             <RowDefinition Height="30" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -34,13 +35,36 @@
         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Info.Description}" TextWrapping="Wrap" Padding="10,5,0,0" />
 
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Text="Next episode" VerticalAlignment="Bottom" />
-        <Button x:Name="Synchronise" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right">
+        <Button Margin="0,0,0,3" x:Name="Synchronise" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right">
             <Path Data="{StaticResource Icon.Sync}" Fill="Black" />
         </Button>
-
         <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Style="{StaticResource Border.Divider.Horizontal}" />
+
+        <TextBlock Grid.Column="1" Margin="0,10,0,0" Grid.ColumnSpan="2" Grid.Row="4" Text="No unfinished episodes left" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <views:EpisodeView Margin="0,10,0,0" DataContext="{Binding NextEpisode}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4">
+            <views:EpisodeView.Style>
+                <Style TargetType="{x:Type views:EpisodeView}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=views:ShellView}, Path=DataContext.NextEpisode.IsFinished}" Value="{x:Null}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </views:EpisodeView.Style>
+        </views:EpisodeView>
+        
 
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Text="Other episodes" VerticalAlignment="Bottom" />
         <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Style="{StaticResource Border.Divider.Horizontal}" />
+        <ListBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" ItemsSource="{Binding Episodes}" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type viewmodels:EpisodeViewModel}">
+                    <views:EpisodeView/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
     </Grid>
 </Window>
