@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:DarknetDiaries.WinUI.Views"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type=viewmodels:ShellViewModel}"
-        Width="375" Height="500" Title="Darknet Diaries">
+        Width="375" MinWidth="375" MinHeight="365" Height="500" Title="Darknet Diaries">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10" />
@@ -68,7 +68,7 @@
 
         <TextBlock Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Text="Other episodes" VerticalAlignment="Bottom" />
         <Border Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Style="{StaticResource Border.Divider.Horizontal}" />
-        <ListBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" ItemsSource="{Binding Episodes}" 
+        <ListBox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="7" ItemsSource="{Binding Episodes}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type viewmodels:EpisodeViewModel}">

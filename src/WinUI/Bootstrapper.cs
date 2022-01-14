@@ -29,9 +29,10 @@ namespace DarknetDiaries.WinUI
          _Container.Singleton<IWindowManager, WindowManager>()
             .Singleton<IEventAggregator, EventAggregator>()
             .Singleton<SimpleContainer>()
-            .Singleton<ITimeStorage, TimeStorage>();
+            .Singleton<ITimeStorage, TimeStorage>()
+            .Singleton<ShellViewModel>();
 
-         _Container.PerRequest<ShellViewModel>()
+         _Container.PerRequest<PlayerViewModel>()
             .PerRequest<IEpisodeFeed, EpisodeFeed>();
       }
       protected override IEnumerable<Assembly> SelectAssemblies() => new[] { Assembly.GetExecutingAssembly() };

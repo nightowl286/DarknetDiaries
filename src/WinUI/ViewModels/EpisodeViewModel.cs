@@ -59,7 +59,12 @@ namespace DarknetDiaries.WinUI.ViewModels
       }
       public void Play()
       {
-         // show window
+         var model = IoC.Get<PlayerViewModel>();
+         model.Episode = this;
+
+         _WindowManager.ShowWindowAsync(model);
+
+         IoC.Get<ShellViewModel>().TryCloseAsync();
       }
       #endregion
    }

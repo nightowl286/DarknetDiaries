@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Caliburn.Micro;
@@ -10,7 +11,7 @@ using DarknetDiaries.Standard;
 
 namespace DarknetDiaries.WinUI.ViewModels
 {
-   internal class ShellViewModel : PropertyChangedBase
+   internal class ShellViewModel : Screen
    {
       #region Private
       private readonly IEpisodeFeed _Feed;
@@ -32,10 +33,14 @@ namespace DarknetDiaries.WinUI.ViewModels
          _Feed = feed;
          _TimeStorage = timeStorage;
          _WindowManager = windowManager;
-         RefreshFeed();
       }
 
       #region Methods
+      protected override Task OnActivateAsync(CancellationToken cancellationToken)
+      {
+         RefreshFeed();
+         return base.OnActivateAsync(cancellationToken);
+      }
       public void Synchronise() => RefreshFeed();
       public bool CanSynchronise => !_IsRefreshing;
       private void RefreshFeed()
@@ -61,6 +66,7 @@ namespace DarknetDiaries.WinUI.ViewModels
             else
             {
                EpisodeViewModel viewModel = new EpisodeViewModel(ep, _TimeStorage, _WindowManager);
+               
                App.Current.Dispatcher.Invoke(
                   () => _Episodes.Add(viewModel));
             }
