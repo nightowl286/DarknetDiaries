@@ -59,7 +59,6 @@ namespace DarknetDiaries.WinUI.ViewModels
       }
       public void Play()
       {
-         
          // show window
       }
       #endregion
