@@ -28,6 +28,7 @@ namespace DarknetDiaries.WinUI.ViewModels
          {
             Set(ref _WatchedTime, value);
             NotifyOfPropertyChange(() => IsFinished);
+            NotifyOfPropertyChange(() => HasStarted);
             if (IsFinished)
                _TimeStorage.SaveAsFinished(Episode.Number);
             else
@@ -35,6 +36,7 @@ namespace DarknetDiaries.WinUI.ViewModels
          }
       }
       public bool IsFinished => WatchedTime == Episode.Duration || WatchedTime.TotalSeconds == -1;
+      public bool HasStarted => WatchedTime.TotalSeconds > 0;
       #endregion
       public EpisodeViewModel(IEpisode episode, ITimeStorage storage, IWindowManager windowManager)
       {
@@ -52,6 +54,7 @@ namespace DarknetDiaries.WinUI.ViewModels
          Debug.Assert(_Episode != null);
          _WatchedTime = _TimeStorage.Get(episode.Number, out _);
          NotifyOfPropertyChange(() => WatchedTime);
+         NotifyOfPropertyChange(() => HasStarted);
          NotifyOfPropertyChange(() => IsFinished);
       }
       public void Play()
