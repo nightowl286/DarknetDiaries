@@ -13,23 +13,31 @@ namespace DarknetDiaries.WinUI.ViewModels
    {
       #region Private
       private readonly IEpisodeFeed _Feed;
+      private readonly ITimeStorage _TimeStorage;
       private ISeriesInfo? _Info;
-      private ObservableCollection<IEpisode> _Episodes = new ObservableCollection<IEpisode>();
+      private ObservableCollection<EpisodeViewModel> _Episodes = new ObservableCollection<EpisodeViewModel>();
+      private bool _IsRefreshing;
       #endregion
 
       #region Properties
       public ISeriesInfo? Info { get => _Info; private set => Set(ref _Info, value); }
-      public ObservableCollection<IEpisode> Episodes => _Episodes;
+      public ObservableCollection<EpisodeViewModel> Episodes => _Episodes;
       #endregion
-      public ShellViewModel(IEpisodeFeed feed)
+      public ShellViewModel(IEpisodeFeed feed, ITimeStorage timeStorage)
       {
          _Feed = feed;
+         _TimeStorage = timeStorage;
          RefreshFeed();
       }
 
       #region Methods
+      public void Synchronise() => RefreshFeed();
+      public bool CanSynchronise => !_IsRefreshing;
       private void RefreshFeed()
       {
+         if (_IsRefreshing) return;
+
+         _IsRefreshing = true;
          Task task = _Feed.RefreshData();
 
          task.ContinueWith(FeedRefreshed);
@@ -42,15 +50,22 @@ namespace DarknetDiaries.WinUI.ViewModels
          // replace or add episodes
          for (int i = 0; i < episodes.Count; i++)
          {
+            IEpisode ep = episodes[i];
             if (i < _Episodes.Count)
-               _Episodes[i] = episodes[i];
+               _Episodes[i].Change(ep);
             else
-               _Episodes.Add(episodes[i]);
+            {
+               EpisodeViewModel viewModel = new EpisodeViewModel(ep, _TimeStorage);
+               _Episodes.Add(viewModel);
+            }
          }
 
          // remove later ones | should never actually be necessary but used as a precaution
          for (int i = _Episodes.Count - 1; i >= episodes.Count; i--)
             _Episodes.RemoveAt(i);
+
+         _IsRefreshing = false;
+         NotifyOfPropertyChange(() => CanSynchronise);
       }
       #endregion
    }

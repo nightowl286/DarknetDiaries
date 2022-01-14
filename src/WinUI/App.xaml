@@ -8,8 +8,9 @@
                 <ResourceDictionary>
                     <local:Bootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
+                <ResourceDictionary Source="Resources/Icons.xaml" />
                 <ResourceDictionary>
-                    
+
                     <Color x:Key="Color.Accent">#ad3b3b</Color>
                     <Color x:Key="Color.Accent.Shade(37.5)">#6c2525</Color>
                     <Color x:Key="Color.Accent.Shade">#973333</Color>
