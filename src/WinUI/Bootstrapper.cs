@@ -28,7 +28,8 @@ namespace DarknetDiaries.WinUI
       {
          _Container.Singleton<IWindowManager, WindowManager>()
             .Singleton<IEventAggregator, EventAggregator>()
-            .Singleton<SimpleContainer>();
+            .Singleton<SimpleContainer>()
+            .Singleton<ITimeStorage, TimeStorage>();
 
          _Container.PerRequest<ShellViewModel>()
             .PerRequest<IEpisodeFeed, EpisodeFeed>();
