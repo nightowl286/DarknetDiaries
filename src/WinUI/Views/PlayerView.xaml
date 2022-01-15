@@ -29,7 +29,7 @@
         <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
             <Run Text="EP #"/><Run Text="{Binding Episode.Number, Mode=OneWay}" />
         </TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Player.Position}" />
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Player.Position, Converter={StaticResource Converter.TimeSpan.String}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
         <Button Name="GoBackward" Grid.Column="2" Grid.Row="2">
             <Path Stroke="Black" Data="{StaticResource Icon.Skip.Backward}"/>
         </Button>
@@ -50,7 +50,7 @@
         <Button Name="GoForward" Grid.Column="4" Grid.Row="2">
             <Path Stroke="Black" Data="{StaticResource Icon.Skip.Forward}" />
         </Button>
-        <TextBlock Grid.Column="5" Grid.Row="2" Text="{Binding Player.Duration}" />
+        <TextBlock Grid.Column="5" Grid.Row="2" Text="{Binding Player.Duration, Converter={StaticResource Converter.TimeSpan.String}}" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
 
         <ProgressBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Minimum="0" Maximum="{Binding Player.Duration.TotalSeconds}" Value="{Binding Player.Position.TotalSeconds, Mode=OneWay}" />
     </Grid>

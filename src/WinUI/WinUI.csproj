@@ -9,7 +9,12 @@
     <RootNamespace>DarknetDiaries.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <Company>TNO</Company>
     <Authors>Nightowl</Authors>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />

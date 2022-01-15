@@ -28,7 +28,7 @@
             <Run Text="EP #"/><Run Text="{Binding Episode.Number, Mode=OneWay}"/>
         </TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Episode.Title}" ToolTip="{Binding Episode.Title}" TextTrimming="CharacterEllipsis" TextWrapping="Wrap"/>
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Episode.Duration}" />
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Episode.Duration, Converter={StaticResource Converter.TimeSpan.String}}" />
 
         <Button Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,0,0,0" Width="32" Height="32" VerticalAlignment="Center" Content="Play">
             <i:Interaction.Triggers>
