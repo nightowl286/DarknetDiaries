@@ -38,5 +38,7 @@
             </i:Interaction.Triggers>
         </Button>
 
+        <ProgressBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="6" Minimum="0" Maximum="1" Value="{Binding WatchedPercent}" />
+
     </Grid>
 </UserControl>

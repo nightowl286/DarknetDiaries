@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace DarknetDiaries.Standard
+﻿namespace DarknetDiaries.Standard
 {
    public interface ITimeStorage
    {
       #region Methods
-      TimeSpan Get(int episodeNumber, out bool isFinished);
-      void Save(int episodeNumber, TimeSpan time);
-      void SaveAsFinished(int episodeNumber);
+      double Get(int episodeNumber);
+      void Save(int episodeNumber, double timePercent);
       #endregion
    }
 }

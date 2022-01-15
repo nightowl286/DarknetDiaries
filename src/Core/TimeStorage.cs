@@ -1,9 +1,6 @@
 ﻿using DarknetDiaries.Standard;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Text;
 
 namespace DarknetDiaries.Core
 {
@@ -11,8 +8,7 @@ namespace DarknetDiaries.Core
    {
       #region Private
       private const string PATH = "time.dat";
-      private TimeSpan[] _Data;
-      private static readonly TimeSpan _Finished = TimeSpan.FromSeconds(-1);
+      private double[] _Data;
       #endregion
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
       public TimeStorage()
@@ -20,28 +16,25 @@ namespace DarknetDiaries.Core
          if (File.Exists(PATH))
             Load();
          else
-            _Data = Array.Empty<TimeSpan>();
+            _Data = Array.Empty<double>();
       }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
       #region Methods
-      public TimeSpan Get(int episodeNumber, out bool isFinished)
+      public double Get(int episodeNumber)
       {
-         TimeSpan time = TimeSpan.Zero;
+         double time = 0;
          if (_Data.Length >= episodeNumber && episodeNumber >= 1)
             time = _Data[episodeNumber - 1];
 
-         isFinished = time == _Finished;
-
          return time;
       }
-      public void Save(int episodeNumber, TimeSpan time)
+      public void Save(int episodeNumber, double timePercent)
       {
          EnsureSize(episodeNumber);
-         _Data[episodeNumber - 1] = time;
+         _Data[episodeNumber - 1] = timePercent;
          Save();
       }
-      public void SaveAsFinished(int episodeNumber) => Save(episodeNumber, _Finished);
       #endregion
 
       #region Helpers
@@ -56,11 +49,11 @@ namespace DarknetDiaries.Core
          using BinaryReader br = new BinaryReader(fs);
          int items = (int)(fs.Length / sizeof(int));
 
-         _Data = new TimeSpan[items];
+         _Data = new double[items];
          for (int i = 0; i < _Data.Length; i++)
          {
-            int seconds = br.ReadInt32();
-            _Data[i] = TimeSpan.FromSeconds(seconds);
+            double percent = br.ReadDouble();
+            _Data[i] = percent;
          }
       }
       private void Save()
@@ -68,12 +61,8 @@ namespace DarknetDiaries.Core
          using FileStream fs = new FileStream(PATH, FileMode.Create);
          using BinaryWriter bw = new BinaryWriter(fs);
 
-         foreach(TimeSpan time in _Data)
-         {
-            int seconds = (int)time.TotalSeconds;
-            bw.Write(seconds);
-         }
-
+         foreach (double timePercent in _Data)
+            bw.Write(timePercent);
       }
       #endregion
    }
