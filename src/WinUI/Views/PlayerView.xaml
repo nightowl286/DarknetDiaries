@@ -7,51 +7,84 @@
         mc:Ignorable="d"
         xmlns:viewmodels="clr-namespace:DarknetDiaries.WinUI.ViewModels"
         d:DataContext="{d:DesignInstance Type=viewmodels:PlayerViewModel}"
-        Title="PlayerView" Height="450" Width="800" FontFamily="Consolas">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="64" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        Title="Darknet Diaries Player | By Nightowl" Height="125" MinWidth="285" SizeToContent="Width" ResizeMode="CanMinimize" FontFamily="Consolas" Foreground="{StaticResource Brush.Text}" AllowsTransparency="True" WindowStyle="None" Background="Transparent" MouseMove="Window_MouseMove">
+    <Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="Opacity" Value="0.5" />
+            <Setter Property="Topmost" Value="True" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1" />
+                </Trigger>
+                <Trigger Property="WindowState" Value="Minimized">
+                    <Setter Property="Topmost" Value="False" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Style>
+    <Grid Margin="10">
+        <Border Background="{StaticResource Brush.Background.Tint(3.88)}" Effect="{StaticResource Effect.WindowShadow}" CornerRadius="10"/>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="60" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="60" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <Slider Grid.ColumnSpan="4" Minimum="0" Maximum="1" Value="{Binding Player.Volume}" />
-        <Image Grid.Row="1" Grid.RowSpan="3" Height="64" Source="{Binding Episode.Image}" />
-        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
-            <Run Text="EP #"/><Run Text="{Binding Episode.Number, Mode=OneWay}" />
-        </TextBlock>
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Player.Position, Converter={StaticResource Converter.TimeSpan.String}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
-        <Button Name="GoBackward" Grid.Column="2" Grid.Row="2">
-            <Path Stroke="Black" Data="{StaticResource Icon.Skip.Backward}"/>
-        </Button>
-        <Button x:Name="TogglePause" Grid.Column="3" Grid.Row="2">
-            <Path Stroke="Black">
-                <Path.Style>
-                    <Style TargetType="{x:Type Path}">
-                        <Setter Property="Data" Value="{StaticResource Icon.Play}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Player.IsPlaying}" Value="True">
-                                <Setter Property="Data" Value="{StaticResource Icon.Pause}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Path.Style>
-            </Path>
-        </Button>
-        <Button Name="GoForward" Grid.Column="4" Grid.Row="2">
-            <Path Stroke="Black" Data="{StaticResource Icon.Skip.Forward}" />
-        </Button>
-        <TextBlock Grid.Column="5" Grid.Row="2" Text="{Binding Player.Duration, Converter={StaticResource Converter.TimeSpan.String}}" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+            <Slider Grid.ColumnSpan="5" Margin="0,-3,3,3" Minimum="0" Maximum="1" Value="{Binding Player.Volume}" ToolTip="Volume" />
+            <Image Grid.Row="1" Grid.RowSpan="3" Width="64" Height="64" Margin="0,0,5,0" ToolTip="{Binding Episode.Title}" VerticalAlignment="Bottom" Source="{Binding Episode.Image}" />
+            
+            <TextBlock Grid.Row="1" Grid.Column="1" MaxWidth="150" HorizontalAlignment="Left" Grid.ColumnSpan="4" VerticalAlignment="Center" ToolTip="{Binding Episode.Title}" TextTrimming="CharacterEllipsis">
+                <Run Text="EP #" /><Run Text="{Binding Episode.Number, Mode=OneWay}" />
+                <Run Text="{Binding Episode.Title}" />
+            </TextBlock>
+            
+            <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Player.Position, Converter={StaticResource Converter.TimeSpan.String}}" 
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left" ToolTip="Time in episode"/>
+            <Button Name="GoBackward" ToolTip="Undo 15s" Grid.Column="2" Grid.Row="2" Style="{StaticResource Button.Icon}">
+                <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="{StaticResource Icon.Skip.Backward}" />
+            </Button>
+            <Button x:Name="TogglePause" Grid.Column="3" Grid.Row="2" Style="{StaticResource Button.Icon}">
+                <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Path.Style>
+                        <Style TargetType="{x:Type Path}">
+                            <Setter Property="Data" Value="{StaticResource Icon.Play}" />
+                            <Setter Property="ToolTip" Value="Play" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Player.IsPlaying}" Value="True">
+                                    <Setter Property="Data" Value="{StaticResource Icon.Pause}" />
+                                    <Setter Property="ToolTip" Value="Pause" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Path.Style>
+                </Path>
+            </Button>
+            <Button Name="GoForward" ToolTip="Skip 15s" Grid.Column="4" Grid.Row="2" Style="{StaticResource Button.Icon}">
+                <Path Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="{StaticResource Icon.Skip.Forward}" />
+            </Button>
 
-        <ProgressBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Minimum="0" Maximum="{Binding Player.Duration.TotalSeconds}" Value="{Binding Player.Position.TotalSeconds, Mode=OneWay}" />
+            <TextBlock Grid.Column="5" Grid.Row="2" ToolTip="Duration" Text="{Binding Player.Duration, Converter={StaticResource Converter.TimeSpan.String}}" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
+
+            <ProgressBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Minimum="0" Maximum="{Binding Player.Duration.TotalSeconds}" Value="{Binding Player.Position.TotalSeconds, Mode=OneWay}" />
+
+            <StackPanel Margin="0,-15,-5,0" Orientation="Horizontal" Grid.Column="5" Grid.RowSpan="2" HorizontalAlignment="Right">
+                <Button x:Name="MinimiseWindow" Style="{StaticResource Button.Base}" Width="24" Height="24" ToolTip="Minimise">
+                    <Path Margin="0,13,0,0" Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="{StaticResource Icon.Minimise}" />
+                </Button>
+                <Button x:Name="CloseWindow" Style="{StaticResource Button.Base}" Width="24" Height="24" ToolTip="Close">
+                    <Path Margin="2" Stretch="Uniform" Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" Data="{StaticResource Icon.Close}" />
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

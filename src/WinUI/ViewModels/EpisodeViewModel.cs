@@ -28,7 +28,7 @@ namespace DarknetDiaries.WinUI.ViewModels
          }
       }
       public bool IsFinished => WatchedPercent == 1;
-      public bool HasStarted => WatchedPercent > 0;
+      public bool HasStarted => WatchedPercent > 0 && WatchedPercent < 1;
       #endregion
       public EpisodeViewModel(IEpisode episode, ITimeStorage storage, IWindowManager windowManager)
       {
@@ -48,6 +48,13 @@ namespace DarknetDiaries.WinUI.ViewModels
          NotifyOfPropertyChange(() => WatchedPercent);
          NotifyOfPropertyChange(() => HasStarted);
          NotifyOfPropertyChange(() => IsFinished);
+      }
+      public void ToggleSeen()
+      {
+         WatchedPercent = IsFinished ? 0 : 1;
+
+         IoC.Get<ShellViewModel>().Synchronise();
+
       }
       public void Play()
       {

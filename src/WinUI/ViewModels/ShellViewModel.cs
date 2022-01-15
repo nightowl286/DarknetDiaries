@@ -86,6 +86,7 @@ namespace DarknetDiaries.WinUI.ViewModels
                break;
             }
          }
+
          NextEpisode = nextEp;
 
          _IsRefreshing = false;

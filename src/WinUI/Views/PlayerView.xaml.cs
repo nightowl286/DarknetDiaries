@@ -23,5 +23,11 @@ namespace DarknetDiaries.WinUI.Views
       {
          InitializeComponent();
       }
+
+      private void Window_MouseMove(object sender, MouseEventArgs e)
+      {
+         if (Mouse.LeftButton == MouseButtonState.Pressed && Mouse.Captured == null)
+            this.DragMove();
+      }
    }
 }

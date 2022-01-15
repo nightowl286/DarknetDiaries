@@ -15,7 +15,8 @@
                 <ResourceDictionary>
 
                     <converters:TimespanStringConverter x:Key="Converter.TimeSpan.String" />
-                    
+                    <converters:FirstDegreeConverter x:Key="FirstDegreeFunction" />
+
                     <DropShadowEffect x:Key="Effect.WindowShadow" Direction="315" ShadowDepth="1" Color="{DynamicResource Color.Background}" BlurRadius="10" />
                     <DropShadowEffect x:Key="Effect.SmallShadow" ShadowDepth="1" />
 
@@ -26,6 +27,11 @@
                         <Setter Property="Effect" Value="{DynamicResource Effect.SmallShadow}" />
                     </Style>
                 </ResourceDictionary>
+                <ResourceDictionary Source="Resources/Sliders.xaml" />
+                <ResourceDictionary Source="Resources/ScrollBars.xaml" />
+                <ResourceDictionary Source="Resources/ListBoxes.xaml" />
+                <ResourceDictionary Source="Resources/ProgressBars.xaml" />
+                <ResourceDictionary Source="Resources/Buttons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

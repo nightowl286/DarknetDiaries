@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DarknetDiaries.WinUI.ViewModels
 {
@@ -42,7 +43,7 @@ namespace DarknetDiaries.WinUI.ViewModels
       public void SetEpisode(EpisodeViewModel episode)
       {
          _WatchedEpisode = episode;
-         _Episode = episode.Episode;
+         Episode = episode.Episode;
       }
       protected override Task OnActivateAsync(CancellationToken cancellationToken)
       {
@@ -60,6 +61,8 @@ namespace DarknetDiaries.WinUI.ViewModels
          }
 
          _Player.PlaybackFinished -= Player_PlaybackFinished;
+         _Player.Dispose();
+
          ShellViewModel shell = IoC.Get<ShellViewModel>();
 
          await _WindowManager.ShowWindowAsync(shell);
@@ -88,6 +91,20 @@ namespace DarknetDiaries.WinUI.ViewModels
 
          _Player.Position = newPosition;
          SaveWatchedPercent();
+      }
+      public void MinimiseWindow()
+      {
+         if (GetView() is Window wnd)
+         {
+            wnd.WindowState = WindowState.Minimized;
+         }
+      }
+      public void CloseWindow()
+      {
+         if (GetView() is Window wnd)
+         {
+            wnd.Close();
+         }
       }
       #endregion
 
