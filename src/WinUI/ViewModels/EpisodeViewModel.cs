@@ -49,17 +49,17 @@ namespace DarknetDiaries.WinUI.ViewModels
          NotifyOfPropertyChange(() => HasStarted);
          NotifyOfPropertyChange(() => IsFinished);
       }
-      public void ToggleSeen()
+      public void ToggleSeen(EpisodeViewModel ep)
       {
-         WatchedPercent = IsFinished ? 0 : 1;
+         ep.WatchedPercent = ep.IsFinished ? 0 : 1;
 
          IoC.Get<ShellViewModel>().Synchronise();
 
       }
-      public void Play()
+      public void Play(EpisodeViewModel ep)
       {
          var model = IoC.Get<PlayerViewModel>();
-         model.SetEpisode(this);
+         model.SetEpisode(ep);
 
          _WindowManager.ShowWindowAsync(model);
 
