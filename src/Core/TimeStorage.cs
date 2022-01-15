@@ -47,7 +47,7 @@ namespace DarknetDiaries.Core
       {
          using FileStream fs = new FileStream(PATH, FileMode.Open);
          using BinaryReader br = new BinaryReader(fs);
-         int items = (int)(fs.Length / sizeof(int));
+         int items = (int)(fs.Length / sizeof(double));
 
          _Data = new double[items];
          for (int i = 0; i < _Data.Length; i++)

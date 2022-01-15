@@ -33,7 +33,8 @@ namespace DarknetDiaries.WinUI
             .Singleton<ShellViewModel>();
 
          _Container.PerRequest<PlayerViewModel>()
-            .PerRequest<IEpisodeFeed, EpisodeFeed>();
+            .PerRequest<IEpisodeFeed, EpisodeFeed>()
+            .PerRequest<IAudioPlayer, AudioPlayer>();
       }
       protected override IEnumerable<Assembly> SelectAssemblies() => new[] { Assembly.GetExecutingAssembly() };
       #endregion

@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DarknetDiaries.WinUI.Views"
         mc:Ignorable="d"
-        Title="PlayerView" Height="450" Width="800">
+        xmlns:viewmodels="clr-namespace:DarknetDiaries.WinUI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:PlayerViewModel}"
+        Title="PlayerView" Height="450" Width="800" FontFamily="Consolas">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="64" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Slider Grid.ColumnSpan="4" Minimum="0" Maximum="1" Value="{Binding Player.Volume}" />
+        <Image Grid.Row="1" Grid.RowSpan="3" Height="64" Source="{Binding Episode.Image}" />
+        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+            <Run Text="EP #"/><Run Text="{Binding Episode.Number, Mode=OneWay}" />
+        </TextBlock>
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding Player.Position}" />
+        <Button Name="GoBackward" Grid.Column="2" Grid.Row="2">
+            <Path Stroke="Black" Data="{StaticResource Icon.Skip.Backward}"/>
+        </Button>
+        <Button x:Name="TogglePause" Grid.Column="3" Grid.Row="2">
+            <Path Stroke="Black">
+                <Path.Style>
+                    <Style TargetType="{x:Type Path}">
+                        <Setter Property="Data" Value="{StaticResource Icon.Play}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Player.IsPlaying}" Value="True">
+                                <Setter Property="Data" Value="{StaticResource Icon.Pause}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+        </Button>
+        <Button Name="GoForward" Grid.Column="4" Grid.Row="2">
+            <Path Stroke="Black" Data="{StaticResource Icon.Skip.Forward}" />
+        </Button>
+        <TextBlock Grid.Column="5" Grid.Row="2" Text="{Binding Player.Duration}" />
+
+        <ProgressBar Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5" Minimum="0" Maximum="{Binding Player.Duration.TotalSeconds}" Value="{Binding Player.Position.TotalSeconds, Mode=OneWay}" />
     </Grid>
 </Window>

@@ -43,16 +43,16 @@ namespace DarknetDiaries.WinUI.ViewModels
       }
       public void Synchronise() => RefreshFeed();
       public bool CanSynchronise => !_IsRefreshing;
-      private void RefreshFeed()
+      private async void RefreshFeed()
       {
          if (_IsRefreshing) return;
 
          _IsRefreshing = true;
-         Task task = _Feed.RefreshData();
+         await _Feed.RefreshData();
 
-         task.ContinueWith(FeedRefreshed);
+         FeedRefreshed();
       }
-      private void FeedRefreshed(Task task)
+      private void FeedRefreshed()
       {
          Info = _Feed.GetInfo();
          var episodes = _Feed.GetEpisodes();
@@ -66,9 +66,8 @@ namespace DarknetDiaries.WinUI.ViewModels
             else
             {
                EpisodeViewModel viewModel = new EpisodeViewModel(ep, _TimeStorage, _WindowManager);
-               
-               App.Current.Dispatcher.Invoke(
-                  () => _Episodes.Add(viewModel));
+
+               OnUIThread(() => _Episodes.Add(viewModel));
             }
             epCounter++;
          }
@@ -79,9 +78,9 @@ namespace DarknetDiaries.WinUI.ViewModels
 
          // Select next episode
          EpisodeViewModel? nextEp = null;
-         for(int i = _Episodes.Count - 1; i >= 0; i--)
+         for (int i = _Episodes.Count - 1; i >= 0; i--)
          {
-            if (nextEp?.IsFinished != true)
+            if (!_Episodes[i].IsFinished)
             {
                nextEp = _Episodes[i];
                break;

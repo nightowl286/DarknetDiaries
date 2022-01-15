@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DarknetDiaries.WinUI.Views"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              xmlns:viewmodels="clr-namespace:DarknetDiaries.WinUI.ViewModels"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:cal="http://www.caliburnproject.org"
              d:DataContext="{d:DesignInstance Type=viewmodels:EpisodeViewModel}">
     <Grid Margin="3,3,3,3">
         <Grid.ColumnDefinitions>
