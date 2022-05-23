@@ -1,3 +1,5 @@
+**This repo has been archived and will not be updated or maintained in any way, the project is still usable however.**
+
 # DarknetDiaries
 A small program to play and keep track of [darknet diaries](https://darknetdiaries.com/) episodes.
 
